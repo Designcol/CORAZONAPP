@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>&lt;model-viewer&gt; template</title>
+  <meta charset="utf-8">
+  <meta name="description" content="&lt;model-viewer&gt; template">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type="text/css" href="./styles.css" rel="stylesheet"/>
+   
+  <!-- OPTIONAL: The :focus-visible polyfill removes the focus ring for some input types -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+
+  <script src="https://unpkg.com/event-target@latest/min.js"></script>
+  <script src="https://unpkg.com/resize-observer-polyfill@1.5.0/dist/ResizeObserver.global.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+  <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+
+ 
+  <script src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.js" defer></script>
+
+</head>
+
+<body>
+  <!-- <model-viewer> HTML element -->
+  <model-viewer id="animation-demo" poster-dismissed poster="poster.webp" reveal="manual" src="beating_heartMF.glb"
+    ios-src="/App demo 02/Beating heart.gltf" ar ar-modes="scene-viewer quick-look" shadow-intensity="1" camera-controls
+    exposure="1" loading="lazy">
+
+
+    <div id="lazy-load-poster" slot="poster"></div>
+    <div id="button-load" slot="poster">
+
+      <div id="inicio01">
+        <h3>Click para interactuar en 3D</h3>
+      </div>
+
+      <img id="click01" src="click01.png">
+
+      <div class="container4">
+        <div class="cube">
+          <div class="side side1"></div>
+          <div class="side side2"></div>
+          <div class="side side3"></div>
+          <div class="side side4"></div>
+          <div class="side side5"></div>
+          <div class="side side6"></div>
+        </div>
+      </div>
+
+      <div class="container container5">
+      </div>
+    </div>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div class="loader"></div>
+
+    <div class="annotation" display='none'>
+      <div>Cardiac Conduction System</div>
+    </div>
+
+
+    <div class="titulo_boton">
+      Información adicional
+      <a style='cursor: pointer;' onClick="muestra_oculta('contenido')" class="boton_mostrar">Mostrar /
+        Ocultar</a>
+    </div>
+
+    <script>
+      function muestra_oculta(id) {
+        if (document.getElementById) { //se obtiene el id
+          var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+          el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+        }
+      }
+      window.onload = function () {/*hace que se cargue la función lo que predetermina que div estará oculto hasta llamar a la función nuevamente*/
+        muestra_oculta('contenido');/* "contenido_a_mostrar" es el nombre que le dimos al DIV */
+      }</script>
+
+
+    <div id="contenido" onClick="muestra_oculta('contenido')">
+      <p><b>Cardiac Conduction System</b><br><br>An animation of the heart's normal pacing is presented.
+
+        Specific views can be obtained by using the pan/rotate, zoom, and explore buttons. The pin labels can be
+        repositioned by clicking and dragging them.
+    </div>
+
+<slot>
+    <button id="botonp" onclick="togglePlayPause(), togglePlayPause2()"
+      style="position: absolute; bottom: 3%; left: 5%; height:30px; width:25vh; font-size: 12px; border-radius: 5px; border: 0px; font-weight: 500; background-color: white; color: #453f3f;">Reproducir/Pausar</button>
+</slot>
+
+
+    <div class="annotation" display='none'>
+      <div>Cardiac Conduction System</div>
+    </div>
+
+
+    <img id="controler01" src="BOTONES-TACTILES01.png" width="220" height="350" />
+    <div class="icon3D">
+      <img id="icon3D" src="icon3D.png" />
+    </div>
+
+
+
+
+    <div slot="hotspot-nose" class="anchor" id="n11" data-surface="0 0 10986 10993 10988 0.055 0.191 0.754"></div>
+    <div slot="hotspot-Purkinje" class="anchor" id="n12" data-surface="0 0 17457 17268 17432 0.994 0.003 0.004"></div>
+    <div slot="hotspot-Pulmonary" class="anchor" id="n13" data-surface="0 0 16461 16464 16465 0.417 0.546 0.037"></div>
+    <div slot="hotspot-Aorta" class="anchor" id="n14" data-surface="0 0 4143 3341 4181 0.239 0.251 0.510"></div>
+
+    <svg id="lines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="lineContainer">
+
+      <line class="line" id="l1"></line>
+      <line class="line" id="l2"></line>
+      <line class="line" id="l3"></line>
+      <line class="line" id="l4"></line>
+    </svg>
+
+    <div id="container">
+      <button id="nose" class="label" onmousedown="myFunctionocult()">Vena cava</button>
+      <button id="Purkinje" class="label" onmousedown="myFunctionocult02()">Fibras de Purkinje</button>
+      <button id="Pulmonary" class="label" onmousedown="myFunctionocult03()">Arteria Pulmonar</button>
+      <button id="Aorta" class="label" onmousedown="myFunctionocult04()">Aorta</button>
+    </div>
+
+    <button class="Hotspot" id="n1" slot="hotspot-1" data-surface="0 0 10986 10993 10988 0.055 0.191 0.754"
+      onmousedown="myFunction()" data-visibility-attribute="visible"></button>
+    <button class="Hotspot" id="n2" slot="hotspot-2" data-surface="0 0 17457 17268 17432 0.994 0.003 0.004"
+      onmousedown="myFunction02();" data-visibility-attribute="visible"></button>
+    <button class="Hotspot" id="n3" slot="hotspot-3" data-surface="0 0 16461 16464 16465 0.417 0.546 0.037"
+      onmousedown="myFunction03();" data-visibility-attribute="visible"></button>
+    <button class="Hotspot" id="n4" slot="hotspot-4" data-surface="0 0 4143 3341 4181 0.239 0.251 0.510"
+      onmousedown="myFunction04();" data-visibility-attribute="visible"></button>
+
+
+    <audio loop id="sound" src="Heartbeat sound30s.mp3" type="audio/mpeg" style="position: absolute;">Tu navegador no
+      soporta el elemento audio.</audio>
+
+    <div id="fullscreen-button"><img src="address-pointerbb.png"
+        style="width: 4%; position: fixed; left: 5%; bottom: 10%; max-width: 20%" /></div>
+
+
+    <div class="controls">
+      <div>Seleccionar por Zonas: <select id="variant"
+          style=" width: 100% !important; margin-top: 5px; color: #0c204d; border-radius: 5px;"></select></div>
+    </div>
+
+
+    <button class="boton001" id="toggle-button01" onclick="ocultarMostrarElementos(), ocultarMostrarElementos1() 
+        " style="background-color: #d3d3d37e; align-content: center;  border-width: 1px; position: absolute; bottom:
+         15em; right: 5em; color: #0c204d; padding: 5px; border-radius: 5px; font-size: 10px; width: 150px;">
+      <img id="eye" src="eye_hide_icon01.png" style="transition: transform .2s; width: 25px; display: inline-block;">
+      <br>Mostrar / Ocultar etiquetas
+    </button>
+
+
+
+    <script>
+
+      function ocultarMostrarElementos() {
+        var elementos = document.getElementsByClassName("label");
+        for (var i = 0; i < elementos.length; i++) {
+          if (elementos[i].style.visibility === "hidden") {
+            elementos[i].style.visibility = "visible";
+          } else {
+            elementos[i].style.visibility = "hidden";
+          }
+        }
+      }
+      function ocultarMostrarElementos1() {
+        var elementos = document.getElementsByClassName("line");
+        for (var i = 0; i < elementos.length; i++) {
+          if (elementos[i].style.visibility === "hidden") {
+            elementos[i].style.visibility = "visible";
+          } else {
+            elementos[i].style.visibility = "hidden";
+          }
+        }
+      }
+
+    </script>
+
+
+
+    <script>
+      const modelViewerVariants = document.querySelector("model-viewer#animation-demo");
+      const select = document.querySelector('#variant');
+
+      modelViewerVariants.addEventListener('load', () => {
+        const names = modelViewerVariants.availableVariants;
+        for (const name of names) {
+          const option = document.createElement('option');
+          option.value = name;
+          option.textContent = name;
+          select.appendChild(option);
+        }
+        // Adds a default option.
+        const option = document.createElement('option');
+        option.value = 'default';
+        option.textContent = 'Default';
+        select.appendChild(option);
+      });
+
+      select.addEventListener('input', (event) => {
+        modelViewerVariants.variantName = event.target.value === 'default' ? null : event.target.value;
+      });
+
+    </script>
+
+
+    <script type="module">
+      const modelViewer1 = document.querySelector('#animation-demo');
+      const lines = modelViewer1.querySelectorAll('line');
+      let baseRect;
+      let noseRect;
+      let PurkinjeRect;
+      let PulmonaryRect;
+      let AortaRect;
+
+      function onResize() {
+        baseRect = modelViewer1.getBoundingClientRect();
+        noseRect = document.querySelector('#nose').getBoundingClientRect();
+        PurkinjeRect = document.querySelector('#Purkinje').getBoundingClientRect();
+        PulmonaryRect = document.querySelector('#Pulmonary').getBoundingClientRect();
+        AortaRect = document.querySelector('#Aorta').getBoundingClientRect();
+      }
+
+      modelViewer1.addEventListener('ar-status', onResize);
+
+      modelViewer1.addEventListener('load', () => {
+        onResize();
+        // update svg
+        function drawLine(svgLine, name, rect) {
+          const hotspot = modelViewer1.queryHotspot('hotspot-' + name);
+          svgLine.setAttribute('x1', hotspot.canvasPosition.x);
+          svgLine.setAttribute('y1', hotspot.canvasPosition.y);
+          svgLine.setAttribute('x2', (rect.left + rect.right) / 2 - baseRect.left);
+          svgLine.setAttribute('y2', rect.top - baseRect.top);
+        }
+
+        // use requestAnimationFrame to update with renderer
+        const startSVGRenderLoop = () => {
+          drawLine(lines[0], 'nose', noseRect);
+          drawLine(lines[1], 'Purkinje', PurkinjeRect);
+          drawLine(lines[2], 'Pulmonary', PulmonaryRect);
+          drawLine(lines[3], 'Aorta', AortaRect);
+          requestAnimationFrame(startSVGRenderLoop);
+        };
+
+        startSVGRenderLoop();
+      });
+    </script>
+
+
+    <script>
+      document.querySelector('#button-load').addEventListener('click',
+        () => document.querySelector('#animation-demo').dismissPoster());
+    </script>
+
+
+    <script>
+
+      function myFunction() {
+        var x = document.getElementById("nose");
+        var y = document.getElementById("l1");
+        if (x.style.visibility === "hidden") {
+          x.style.visibility = "visible";
+          y.style.visibility = "visible";
+        } else {
+          x.style.visibility = "hidden";
+          y.style.visibility = "hidden";
+        }
+      }
+    </script>
+
+    <script>
+
+      function myFunctionocult() {
+        var x = document.getElementById("nose");
+        var y = document.getElementById("l1");
+        if (x.style.visibility === "hidden") {
+          x.style.visibility = "visible";
+          y.style.visibility = "visible";
+        } else {
+          x.style.visibility = "hidden";
+          y.style.visibility = "hidden";
+        }
+      }
+
+    </script>
+
+    <script>
+
+      function myFunctionocult02() {
+        var x = document.getElementById("Purkinje");
+        var y = document.getElementById("l2");
+        if (x.style.visibility === "hidden") {
+          x.style.visibility = "visible";
+          y.style.visibility = "visible";
+        } else {
+          x.style.visibility = "hidden";
+          y.style.visibility = "hidden";
+        }
+      }
+    </script>
+
+    <script>
+      function myFunction02() {
+        var x = document.getElementById("Purkinje");
+        var y = document.getElementById("l2");
+        if (x.style.visibility === "hidden") {
+          x.style.visibility = "visible";
+          y.style.visibility = "visible";
+        } else {
+          x.style.visibility = "hidden";
+          y.style.visibility = "hidden";
+        }
+      }
+    </script>
+
+    <script>
+
+      function myFunctionocult03() {
+        var x = document.getElementById("Pulmonary");
+        var y = document.getElementById("l3");
+        if (x.style.visibility === "hidden") {
+          x.style.visibility = "visible";
+          y.style.visibility = "visible";
+        } else {
+          x.style.visibility = "hidden";
+          y.style.visibility = "hidden";
+        }
+      }
+    </script>
+
+    <script>
+      function myFunction03() {
+        var x = document.getElementById("Pulmonary");
+        var y = document.getElementById("l3");
+        if (x.style.visibility === "hidden") {
+          x.style.visibility = "visible";
+          y.style.visibility = "visible";
+        } else {
+          x.style.visibility = "hidden";
+          y.style.visibility = "hidden";
+        }
+      }
+
+
+    </script>
+
+<script>
+
+  function myFunctionocult04() {
+    var x = document.getElementById("Aorta");
+    var y = document.getElementById("l4");
+    if (x.style.visibility === "hidden") {
+      x.style.visibility = "visible";
+      y.style.visibility = "visible";
+    } else {
+      x.style.visibility = "hidden";
+      y.style.visibility = "hidden";
+    }
+  }
+</script>
+
+<script>
+  function myFunction04() {
+    var x = document.getElementById("Aorta");
+    var y = document.getElementById("l4");
+    if (x.style.visibility === "hidden") {
+      x.style.visibility = "visible";
+      y.style.visibility = "visible";
+    } else {
+      x.style.visibility = "hidden";
+      y.style.visibility = "hidden";
+    }
+  }
+
+  
+</script>
+    <script>
+      var audio = document.getElementById("sound");
+      var boton = document.getElementById("botonp");
+
+      function togglePlayPause2() {
+        if (audio.paused) {
+          audio.play();
+          boton.innerHTML = "Pausar";
+        } else {
+          audio.pause();
+          boton.innerHTML = "Reproducir";
+        }
+      }
+    </script>
+    <script>
+
+      var modelo = document.getElementById("animation-demo");
+      var boton = document.getElementById("botonp");
+
+      function togglePlayPause() {
+        if (modelo.paused) {
+          modelo.play();
+          boton.innerHTML = "Pausar";
+        } else {
+          modelo.pause();
+          boton.innerHTML = "Reproducir";
+        }
+      }
+
+
+    </script>
+    <script>
+      var fullscreenButton = document.getElementById("fullscreen-button");
+      var elementToFullscreen = document.getElementById("animation-demo");
+
+      fullscreenButton.addEventListener("click", function () {
+        if (elementToFullscreen.requestFullscreen) {
+          elementToFullscreen.requestFullscreen();
+        } else if (elementToFullscreen.webkitRequestFullscreen) { /* Safari */
+          elementToFullscreen.webkitRequestFullscreen();
+        } else if (elementToFullscreen.msRequestFullscreen) { /* IE11 */
+          elementToFullscreen.msRequestFullscreen();
+        }
+      });
+
+      var fullscreenButton = document.getElementById('fullscreen-button');
+      fullscreenButton.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          document.documentElement.requestFullscreen();
+        }
+      });
+    </script>
+
+
+
+  </model-viewer>
+  <!-- Loads <model-viewer> for browsers: -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+</body>
+
+</html>
